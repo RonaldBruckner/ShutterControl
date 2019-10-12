@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Shutter Control</string>
+    <string name="add_shutter">Add Shutter</string>
+
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="learn_command_start_text">Please enter the name for your new shutter.</string>
+    <string name="start">Start</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="learn_command_text_0">Press now the UP button on your remote control.</string>
+    <string name="learn_command_text_1">Press now the CIRCLE button on your remote control.</string>
+    <string name="learn_command_text_2">Press now the DOWN button on your remote control.</string>
+
+    <string name="no_wifi">No WIFI</string>
+    <string name="no_wifi_text">Please connect your device to your local WIFI network before you start to setup your shutter controls.</string>
+
+    <string name="error">Error</string>
+    <string name="add_shutter_error_text">An error happened while sniffing the shutter command. Pleas enshure that your smart phone and the RF sniffer are connected to the same WIFI network and try again.</string>
+</resources>

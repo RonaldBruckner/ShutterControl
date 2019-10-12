@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/startLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:textColor="@android:color/black"
+       android:textSize="20sp"
+       android:layout_margin="30dip"
+       android:text="@string/learn_command_start_text"     />
+
+    <EditText
+       android:id="@+id/windowNameEditText"
+       android:layout_width="match_parent"
+       android:layout_height="50dip"
+       android:layout_margin="30dip"
+       android:focusableInTouchMode="true"
+       android:singleLine="true"/>
+
+    <Button
+       android:id="@+id/learnButton"
+       android:layout_width="match_parent"
+       android:layout_height="50dip"
+       android:layout_margin="30dip"
+       android:text="@string/start"
+       android:visibility="gone"/>
+
+</LinearLayout>
+
+<LinearLayout
+       android:id="@+id/learnLayout"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       android:gravity="center_horizontal"
+       android:visibility="gone" >
+
+    <TextView
+       android:id="@+id/learnDescriptionTextView"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:textColor="@android:color/black"
+       android:textSize="20sp"
+       android:layout_margin="30dip"
+       android:text="@string/learn_command_text_0"     />
+
+    <ProgressBar
+       android:id="@+id/progressbar"
+       android:layout_width="100dip"
+       android:layout_height="100dip"/>
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_margin="30dip"
+        android:text="@string/cancel"/>
+
+</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
