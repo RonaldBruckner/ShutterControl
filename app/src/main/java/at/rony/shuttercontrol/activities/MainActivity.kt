@@ -21,6 +21,11 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator
 import com.baoyz.swipemenulistview.SwipeMenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * This Activity displays all the stored shutter control elements in a list.
+ * Elements can be removed by swiping left, new elements can be added with the floating button.
+ */
+
 class MainActivity : AppCompatActivity() {
 
     lateinit var adapter: DeviceAdapter
@@ -32,8 +37,9 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContentView(R.layout.activity_main)
 
-        //start background service in case the app was just installed and
-        //the service was not started by boor broadcast receiver
+        /*start background service in case the app was just installed and
+          the service was not started by boor broadcast receiver
+         */
         if(!Utils.isUdpServiceRunning(this)) {
             var maintenanceService = Intent(this, UdpService::class.java)
             startService(maintenanceService);
@@ -60,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         // set creator
         mainList.setMenuCreator(creator)
 
-        mainList.setOnMenuItemClickListener { position, menu, index ->
+        mainList.setOnMenuItemClickListener { position, _, index ->
             when (index) {
                 0 -> {
                    var shutterToDelete = adapter.getItem(position);
@@ -82,8 +88,8 @@ class MainActivity : AppCompatActivity() {
             false
         }
 
-        addShutterControlButton.setOnClickListener { view ->
-            if(Utils.isWifiConnected(this@MainActivity)) {
+        addShutterControlButton.setOnClickListener {
+            if(Utils.isWifiConnected(this@MainActivity)) { //WIFI must be connected to add a new shutter control element
                 startActivity(Intent(this, AddShutterActivity::class.java))
             } else {
                 Utils.showAlertDialog(this@MainActivity, resources.getString(R.string.no_wifi), resources.getString(R.string.no_wifi_text));

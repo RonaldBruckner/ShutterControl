@@ -14,11 +14,20 @@ import at.rony.shuttercontrol.R
 import java.util.ArrayList
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
-import at.rony.shuttercontrol.constants.Constants.Companion.MAX_COMMANDS_PER_SHUTTER
+import at.rony.shuttercontrol.constants.Constants.Companion.MAX_COMMAND_INDEX_PER_SHUTTER
 import at.rony.shuttercontrol.tools.*
 import at.rony.shuttercontrol.widget.StackWidgetProvider
 
-
+/**
+ * This Activity is used to add new shutter control elements.
+ * Each element consists of three commands, up, stop and down.
+ * These commands must be learned, the user has to press the according buttons on the RF or IR
+ * control so that a UDP broadcast is send out.
+ * First a name for the new element must be entered, the the udpHandler is used to listen for
+ * UDP-broadcasts. If a UDP packet is received the user gets instructed to press the next button.
+ * After all commands have been received, the new control element gets stored and the activity will
+ * be finished.
+ */
 
 class AddShutterActivity : AppCompatActivity(), UdpHandlerInterface {
 
@@ -52,7 +61,7 @@ class AddShutterActivity : AppCompatActivity(), UdpHandlerInterface {
             }
 
             override fun onTextChanged(p0: CharSequence, p1: Int, p2: Int, p3: Int) {
-                if(p0.length>0) {
+                if(p0.length>0) {   //only display the learnButton if a name has been entered
                     learnButton.visibility= View.VISIBLE
                 } else {
                     learnButton.visibility= View.GONE
@@ -80,6 +89,7 @@ class AddShutterActivity : AppCompatActivity(), UdpHandlerInterface {
     }
 
 
+
     override fun onUdpCommandReceived(receivedCommand: String) {
         Logger.d(TAG, "onUdpCommandReceived: "+receivedCommand)
 
@@ -89,7 +99,7 @@ class AddShutterActivity : AppCompatActivity(), UdpHandlerInterface {
          */
         runOnUiThread {
             commandList.add(receivedCommand)
-            if(commandIndex < MAX_COMMANDS_PER_SHUTTER) {
+            if(commandIndex < MAX_COMMAND_INDEX_PER_SHUTTER) {
                 commandIndex++
                 val id = getResources().getIdentifier("learn_command_text_"+commandIndex, "string",getPackageName())
                 learnDescriptionTextView.text = resources.getString(id)

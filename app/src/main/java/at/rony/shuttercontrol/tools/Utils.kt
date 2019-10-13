@@ -11,10 +11,14 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.appcompat.app.AlertDialog
 
+
 object Utils {
 
     private val TAG = Utils::class.java.simpleName
 
+    /*
+    Check if the background service is running
+     */
     fun isUdpServiceRunning(context: Context): Boolean {
         try {
             val manager = context.getSystemService(Activity.ACTIVITY_SERVICE) as ActivityManager
@@ -32,6 +36,9 @@ object Utils {
         return false
     }
 
+    /*
+    Convert dp values to px
+     */
     fun dp2px(context: Context, dp: Int): Int {
         return TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(),
@@ -66,7 +73,7 @@ object Utils {
         dialog.setMessage(message)
         dialog.setTitle(title)
         dialog.setNeutralButton("OK",
-            DialogInterface.OnClickListener { dialog, which ->
+            DialogInterface.OnClickListener { dialog, _ ->
                 dialog.cancel()
             })
         val alertDialog = dialog.create()

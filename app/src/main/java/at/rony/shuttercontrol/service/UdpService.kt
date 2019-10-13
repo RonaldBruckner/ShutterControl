@@ -12,6 +12,12 @@ import at.rony.shuttercontrol.tools.UdpHandler
 import at.rony.shuttercontrol.tools.UdpHandlerInterface
 import at.rony.shuttercontrol.tools.Logger
 
+/**
+ * The background service is used to send UDP packets.
+ * It receives base64 command strings via intent broadcasts from the MainActivity or the
+ * StackWidgetService which will be send using the udpHandler.
+ */
+
 class UdpService : Service(), UdpHandlerInterface {
 
     private val TAG = "UdpService"
@@ -44,7 +50,6 @@ class UdpService : Service(), UdpHandlerInterface {
     }
 
     override fun onUdpCommandReceived(receivedCommand: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onBind(intent: Intent): IBinder {

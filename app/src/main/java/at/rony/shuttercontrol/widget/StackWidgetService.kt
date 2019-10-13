@@ -1,22 +1,5 @@
-/*
- * Copyright (C) 2011 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package at.rony.shuttercontrol.widget
 
-import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
@@ -29,26 +12,24 @@ import at.rony.shuttercontrol.tools.Logger
 
 import java.util.ArrayList
 
+/**
+ * Loads the shutter command elements from the database and builds the remote views for the
+ * StackWidgetProvider.
+ */
+
 class StackWidgetService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent): RemoteViewsService.RemoteViewsFactory {
         return StackRemoteViewsFactory(
-            this.applicationContext,
-            intent
+            this.applicationContext
         )
     }
 }
 
-internal class StackRemoteViewsFactory(private val context: Context, intent: Intent) :
+internal class StackRemoteViewsFactory(private val context: Context) :
     RemoteViewsService.RemoteViewsFactory {
 
     var listItems = ArrayList<ShutterModel>()
-    private val mAppWidgetId: Int
-
     lateinit var commandSettingsDB: CommandSettingsDB
-
-    init {
-        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-    }
 
     override fun onCreate() {
         commandSettingsDB = CommandSettingsDB(context)
@@ -72,10 +53,7 @@ internal class StackRemoteViewsFactory(private val context: Context, intent: Int
 
         val listItem = listItems[position]
 
-        var rv: RemoteViews? = null
-
-        rv = RemoteViews(context.packageName, R.layout.shutter_view)
-
+        var rv = RemoteViews(context.packageName, R.layout.shutter_view)
         rv.setTextViewText(R.id.numberTextView, ""+listItem.windowName)
 
         var intent = Intent(Constants.BROADCAST_SEND_UDP_COMMAND)

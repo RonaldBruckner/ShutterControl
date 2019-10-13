@@ -10,6 +10,10 @@ import at.rony.shuttercontrol.constants.Constants.Companion.BROADCAST_SEND_UDP_C
 import at.rony.shuttercontrol.constants.Constants.Companion.UDP_COMMAND
 import kotlinx.android.synthetic.main.shutter_view.view.*
 
+/*
+Visual representation of a shutter control element, containing name, up-,stop- and down-button.
+ */
+
 class ShutterView(context: Context?) : LinearLayout(context) {
 
     lateinit var shutterModel: ShutterModel

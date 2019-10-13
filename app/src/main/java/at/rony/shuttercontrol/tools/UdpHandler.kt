@@ -5,24 +5,23 @@ import java.net.DatagramSocket
 import java.net.InetAddress
 
 import android.content.Context
-import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
-import android.os.Handler
-import android.os.Message
-import android.util.Log
-
-import at.rony.shuttercontrol.activities.MainActivity
 import at.rony.shuttercontrol.constants.Constants
+
+
+/**
+ * Receive and send base64 command strings as UDP broadcast.
+ */
 
 class UdpHandler(context: Context, udpHandlerInterface: UdpHandlerInterface) {
 
     private val TAG = UdpHandler::class.java.simpleName
 
-    lateinit var receivedCommand: String
-    var wifiManager: WifiManager
-    lateinit var serverSocket: DatagramSocket
-    var multicastLock: WifiManager.MulticastLock
-    var udpHandlerInterface: UdpHandlerInterface
+    private lateinit var receivedCommand: String
+    private var wifiManager: WifiManager
+    private lateinit var serverSocket: DatagramSocket
+    private var multicastLock: WifiManager.MulticastLock
+    private var udpHandlerInterface: UdpHandlerInterface
 
     init {
         this.udpHandlerInterface = udpHandlerInterface
@@ -30,18 +29,10 @@ class UdpHandler(context: Context, udpHandlerInterface: UdpHandlerInterface) {
         multicastLock = wifiManager.createMulticastLock(javaClass.simpleName)
     }
 
-    fun listenForUdpBroadcast() {
-        Thread(Runnable {
-            multicastLock.acquire()
-            receivedCommand = read()
-            multicastLock.release()
-
-            Logger.d(TAG, "receivedCommand: " + receivedCommand)
-
-            udpHandlerInterface.onUdpCommandReceived(receivedCommand)
-        }).start()
-    }
-
+    /*
+    Send a shutter command as base64 string as UDP packet.
+    This is done in an own thread as it would block the UI thread.
+     */
     fun sendUdpBroadcast(cmd: String) {
 
         Logger.d(TAG, "send: " + cmd)
@@ -60,12 +51,30 @@ class UdpHandler(context: Context, udpHandlerInterface: UdpHandlerInterface) {
         }).start()
     }
 
+    /*
+    Listen for a UDP broadcast to store a new shutter command.
+    A multicastlock must be aquired so that WIFI brodcasts can be received.
+    After a command has been received the lock gets released an the received command is handed over.
+    This is done in an own thread as it would block the UI thread.
+     */
+    fun listenForUdpBroadcast() {
+        Thread(Runnable {
+            multicastLock.acquire()
+            receivedCommand = read()
+            multicastLock.release()
+
+            Logger.d(TAG, "receivedCommand: " + receivedCommand)
+
+            udpHandlerInterface.onUdpCommandReceived(receivedCommand)
+        }).start()
+    }
+
+    /*
+    Open a UDP serversocket to receive incoming packets and read them into a string
+     */
     fun read(): String {
-
         Logger.d(TAG, "read UDP Socket")
-
         var command = ""
-
         try {
             val receiveData = ByteArray(2048)
             serverSocket = DatagramSocket(Constants.UDP_PORT)
@@ -83,7 +92,6 @@ class UdpHandler(context: Context, udpHandlerInterface: UdpHandlerInterface) {
             udpHandlerInterface.onUdpError()
             Logger.d(TAG, e.message)
         }
-
         return command
     }
 

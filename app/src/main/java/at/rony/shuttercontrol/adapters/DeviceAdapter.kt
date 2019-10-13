@@ -9,6 +9,7 @@ import at.rony.shuttercontrol.model.ShutterModel
 import at.rony.shuttercontrol.tools.Logger
 import at.rony.shuttercontrol.views.ShutterView
 
+
 class DeviceAdapter(private val context: Context) : BaseAdapter() {
 
     private val listItems = ArrayList<ShutterModel>()
@@ -20,7 +21,7 @@ class DeviceAdapter(private val context: Context) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        var view: ShutterView? = null
+        var view: ShutterView?
         if (convertView == null) {
             view = ShutterView(context)
 
@@ -49,10 +50,5 @@ class DeviceAdapter(private val context: Context) : BaseAdapter() {
 
     override fun getCount(): Int {
         return listItems.size
-    }
-
-    fun remove(position: Int) {
-        listItems.removeAt(position)
-        notifyDataSetChanged()
     }
 }

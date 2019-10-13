@@ -9,13 +9,11 @@ import at.rony.shuttercontrol.constants.AppSettings.Companion.DATABASE_VERSION
 import at.rony.shuttercontrol.model.ShutterModel
 import java.util.ArrayList
 
-class CommandSettingsDB
 /**
- * Constructor
- * Takes and keeps a reference of the passed context inAnimation order to access to the application assets and dbCursorources.
- * @param context
+ * DB used to store the name and commands of shutter control elements.
  */
-(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+
+class CommandSettingsDB(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private val TAG = CommandSettingsDB::class.java.simpleName
