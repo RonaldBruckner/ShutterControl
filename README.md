@@ -5,8 +5,8 @@ Android App with widget to sniff and send UDP broadcasts, used to control window
 ![](https://github.com/RonaldBruckner/ShutterControl/blob/master/images/learn_screen.png?raw=true) 
 ![](https://github.com/RonaldBruckner/ShutterControl/blob/master/images/widget.png?raw=true)
 
-A lot of quipment in home automation is based on the RF 433 MHz technology, or use a simple IR remote control also used for TVs.
-To control such equipment with a samrt phone two things are needed.
+A lot of wquipment in home automation is based on the RF 433 MHz technology, or use a simple IR remote control also used for TVs.
+To control such equipment with a smart phone two things are needed.
 
 1. Hardware<br/>
 A device which can receive and send RF or IR commands.
